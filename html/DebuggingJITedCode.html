@@ -111,12 +111,13 @@
 <div class="section" id="background">
 <h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
 <p>Without special runtime support, debugging dynamically generated code can be
-quite painful.  Debuggers generally read debug information from the object file
-on disk, but for JITed code, there is no such file to look for.</p>
-<p>In order to hand over the necessary debug info, GDB established an interface for
-registering JITed code with debuggers.  LLDB implements it in the JITLoaderGDB
-plugin (see setting <code class="docutils literal notranslate"><span class="pre">plugin.jit-loader.gdb.enable</span></code>).  On the JIT
-side, LLVM MCJIT does implement the interface for ELF object files.</p>
+quite painful.  Debuggers generally read debug information from object files on
+disk, but for JITed code there is no such file to look for.</p>
+<p>In order to hand over the necessary debug info, <a class="reference external" href="https://sourceware.org/gdb/current/onlinedocs/gdb/JIT-Interface.html">GDB established an
+interface</a>
+for registering JITed code with debuggers. LLDB implements it in the
+JITLoaderGDB plugin.  On the JIT side, LLVM MCJIT does implement the interface
+for ELF object files.</p>
 <p>At a high level, whenever MCJIT generates new machine code, it does so in an
 in-memory object file that contains the debug information in DWARF format.
 MCJIT then adds this in-memory object file to a global list of dynamically
@@ -136,10 +137,11 @@ Apple ships with Xcode has been frozen at 6.3 for a while.</p>
 </div>
 <div class="section" id="lldb-version">
 <h2>LLDB Version<a class="headerlink" href="#lldb-version" title="Permalink to this headline">¶</a></h2>
-<p>Due to a regression in release 6.0 LLDB didn’t support debugging for JITed code
-for a while.  The bug was fixed in mainline recently, so that support for
-debugging JITed ELF objects is expected to work again from the upcoming release
-12.0 on.</p>
+<p>Due to a regression in release 6.0, LLDB didn’t support JITed code debugging for
+a while.  The bug was fixed in mainline recently, so that debugging JITed ELF
+objects should be possible again from the upcoming release 12.0 on. On macOS the
+feature must be enabled explicitly using the <code class="docutils literal notranslate"><span class="pre">plugin.jit-loader.gdb.enable</span></code>
+setting.</p>
 </div>
 <div class="section" id="debugging-mcjit-ed-code">
 <h2>Debugging MCJIT-ed code<a class="headerlink" href="#debugging-mcjit-ed-code" title="Permalink to this headline">¶</a></h2>
